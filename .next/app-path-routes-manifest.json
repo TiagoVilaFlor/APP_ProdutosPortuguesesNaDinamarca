@@ -1,0 +1,11 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/catalog/route": "/api/catalog",
+  "/api/reserve/route": "/api/reserve",
+  "/manifest.webmanifest/route": "/manifest.webmanifest",
+  "/page": "/",
+  "/review/page": "/review",
+  "/select/page": "/select",
+  "/success/page": "/success"
+}

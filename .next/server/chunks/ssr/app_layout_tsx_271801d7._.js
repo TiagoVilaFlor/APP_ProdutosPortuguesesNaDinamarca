@@ -1,0 +1,3 @@
+module.exports=[33290,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)("html",{lang:"pt",children:(0,b.jsx)("body",{className:"bg-neutral-100",children:(0,b.jsx)("div",{className:"mx-auto min-h-screen max-w-md bg-white shadow-sm",children:a})})})}a.s(["default",()=>c,"metadata",0,{title:"Seleção de Produtos Portugueses",viewport:"width=device-width, initial-scale=1, maximum-scale=1",themeColor:"#000000"}])}];
+
+//# sourceMappingURL=app_layout_tsx_271801d7._.js.map

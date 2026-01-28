@@ -12,6 +12,7 @@ export type CatalogItem = {
   priceEur: number;      // preço por unidade (EUR)
   volumeLiters: number;  // usado para calcular caixas (20L/caixa)
   image?: string;
+  description?: string;
 };
 
 // Regras fixas (podes ajustar)

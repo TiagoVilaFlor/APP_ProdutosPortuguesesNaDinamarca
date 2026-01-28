@@ -11,6 +11,10 @@ export type CartLine = {
   priceEur: number;
   volumeLiters: number;
   qty: number;
+
+  // ✅ ADD THIS
+  image?: string;
+  description?: string;
 };
 
 type CartState = {

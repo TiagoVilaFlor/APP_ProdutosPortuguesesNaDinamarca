@@ -47,12 +47,13 @@ export function ItemRow({ item }: { item: CatalogItem }) {
           onClick={() =>
             add({
               itemId: item.id,
-              name: item.name,
+              name: item.name ?? "Produto sem nome",
               categoryId: item.categoryId,
               unitLabel: item.unitLabel,
               priceEur: item.priceEur,
               image: item.image,
               volumeLiters: item.volumeLiters,
+              description: item.description,
             })
           }
         >
@@ -65,7 +66,10 @@ export function ItemRow({ item }: { item: CatalogItem }) {
           <button className="h-9 w-9 rounded-lg border" onClick={() => setQty(item.id, qty + 1)}>+</button>
         </div>
       )}
-      <ItemModal item={openItem} onClose={() => setOpenItem(null)} />
+      {openItem && (
+        <ItemModal item={openItem} onClose={() => setOpenItem(null)} />
+      )}
+
     </div>
   );
 }

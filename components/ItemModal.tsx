@@ -7,7 +7,7 @@ export function ItemModal({
   item,
   onClose,
 }: {
-  item: CatalogItem | null;
+  item: CatalogItem;
   onClose: () => void;
 }) {
   const { add } = useCart();
@@ -16,8 +16,14 @@ export function ItemModal({
 
   function handleAdd() {
     add({
-      ...item,
-      itemId: item.id,
+      itemId: item.id!,                     // obrigatório
+    name: item.name ?? "Produto sem nome", // fallback seguro
+    priceEur: item.priceEur ?? 0,          // fallback seguro
+    categoryId: item.categoryId,
+    unitLabel: item.unitLabel,
+    volumeLiters: item.volumeLiters,
+    image: item.image,
+    description: item.description ?? "",
     });
     onClose(); // fecha modal depois de adicionar
   }

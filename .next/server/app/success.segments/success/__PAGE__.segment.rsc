@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/7c92e96509cd355e.js"],""]
+3:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"5l9LsWkXSFU07_tIjxh_H","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"p-6","children":[["$","div",null,{"className":"rounded-2xl border border-neutral-200 bg-neutral-50 p-5","children":[["$","h1",null,{"className":"text-xl font-semibold","children":"Reserva submetida ✅"}],["$","p",null,{"className":"mt-2 text-neutral-700","children":"Enviámos um email com o resumo da tua reserva. Se não aparecer, verifica o spam."}]]}],["$","div",null,{"className":"mt-6 space-y-3","children":[["$","$L2",null,{"href":"/select","className":"block w-full rounded-xl border px-4 py-3 text-center","children":"Fazer outra reserva"}],["$","$L2",null,{"href":"/","className":"block w-full rounded-xl bg-black px-4 py-3 text-center text-white font-semibold","children":"Voltar ao início"}]]}]]}],[["$","script","script-0",{"src":"/_next/static/chunks/7c92e96509cd355e.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

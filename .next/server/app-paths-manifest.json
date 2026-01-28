@@ -1,5 +1,11 @@
 {
+  "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/catalog/route": "app/api/catalog/route.js",
+  "/api/reserve/route": "app/api/reserve/route.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/page": "app/page.js",
-  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js"
+  "/review/page": "app/review/page.js",
+  "/select/page": "app/select/page.js",
+  "/success/page": "app/success/page.js"
 }
