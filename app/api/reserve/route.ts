@@ -147,7 +147,7 @@ export async function POST(req: Request) {
   const htmlSummary = toHtml(summary);
 
   const subjectOwner = `Nova reserva - ${body.name} (${formatEur(summary.total)})`;
-  const subjectUser = `Confirmação da tua reserva - Terra das Lanchas (${formatEur(summary.total)})`;
+  const subjectUser = `Confirmação da tua reserva - Produtos Portugueses na Dinamarca (${formatEur(summary.total)})`;
 
   const notesText = body.notes?.trim() ? `\nNotas do cliente: ${body.notes.trim()}\n` : "";
 
