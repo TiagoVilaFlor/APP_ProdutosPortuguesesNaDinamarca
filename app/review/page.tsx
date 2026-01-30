@@ -279,6 +279,7 @@ export default function ReviewPage() {
                   ? "bg-black text-white"
                   : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
               }`}
+              onClick={submit}
             >
               Confirmar e submeter
             </button>
