@@ -37,6 +37,7 @@ function buildSummary(lines: CartLine[], wantsTransport: boolean) {
     priceEur: l.priceEur,
     lineTotalEur: l.priceEur * l.qty,
     volumeLiters: l.volumeLiters,
+    id: l.itemId,
   }));
 
   const liters = lines.reduce((acc, l) => acc + (l.volumeLiters ?? 0) * l.qty, 0);
@@ -66,6 +67,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
     .map(
       (x) => `
       <tr>
+        <td style="padding:10px;border-bottom:1px solid #eee;">${escapeHtml(x.id)}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;">${escapeHtml(x.label)}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">${x.qty}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">${escapeHtml(formatEur(x.priceEur))}</td>
@@ -73,18 +75,6 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
       </tr>`
     )
     .join("");
-
-  const transportBlock =
-    summary.transport > 0
-      ? `<div style="margin-top:12px;padding:12px;border:1px solid #eee;border-radius:12px;background:#fafafa;">
-          <div><strong>Método:</strong> Pick-up (a combinar) + Transporte solicitado</div>
-          <div><strong>Estimativa:</strong> ${summary.liters.toFixed(1)}L → ${summary.boxes} caixa(s)</div>
-          <div><strong>Transporte:</strong> ${escapeHtml(formatEur(summary.transport))} (20€ por caixa de 20L)</div>
-        </div>`
-      : `<div style="margin-top:12px;padding:12px;border:1px solid #eee;border-radius:12px;background:#fafafa;">
-          <div><strong>Método:</strong> Pick-up (a combinar)</div>
-          <div><strong>Transporte:</strong> não solicitado</div>
-        </div>`;
 
   return `
   <div style="font-family:Arial,sans-serif;line-height:1.4;color:#111;">
@@ -96,7 +86,8 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
     <table style="width:100%;border-collapse:collapse;border:1px solid #eee;border-radius:12px;overflow:hidden;">
       <thead>
         <tr style="background:#fafafa;">
-          <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Item</th>
+        <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">#</th>
+          <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Artigo</th>
           <th style="padding:10px;text-align:center;border-bottom:1px solid #eee;">Qtd</th>
           <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço</th>
           <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Subtotal</th>
@@ -118,8 +109,6 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         </tr>
       </tfoot>
     </table>
-
-    ${transportBlock}
   </div>`;
 }
 
@@ -155,7 +144,7 @@ export async function POST(req: Request) {
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   });
 
-  const ownerEmail = process.env.OWNER_EMAIL || "terradaslanchas@gmail.com";
+  const ownerEmail = process.env.OWNER_EMAIL;
   const wantsTransport = Boolean(body.wantsTransport);
 
   const summary = buildSummary(body.lines, wantsTransport);
@@ -181,17 +170,16 @@ ${textSummary}
   const userText =
 `Olá ${body.name},
 
-Recebemos a tua reserva ✅
-(Reserva sem pagamento online — vamos confirmar detalhes por email.)
+Recebemos a tua reserva ✅, e obrigado por participares nesta iniciativa comunitária.
 
-Morada indicada:
+Telefone para contacto:
 ${body.address}
 ${notesText}
 Resumo:
 ${textSummary}
 
 Obrigado,
-Terra das Lanchas
+Inês
 `;
 
   await transporter.sendMail({
@@ -224,7 +212,7 @@ Terra das Lanchas
         <p>Recebemos a tua reserva ✅<br/>
         <span style="color:#555;">(Reserva sem pagamento online — vamos confirmar detalhes por email.)</span></p>
 
-        <p><strong>Morada indicada:</strong><br/>${escapeHtml(body.address)}</p>
+        <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
         ${body.notes?.trim() ? `<p><strong>Notas:</strong><br/>${escapeHtml(body.notes.trim())}</p>` : ""}
 
         ${htmlSummary}
