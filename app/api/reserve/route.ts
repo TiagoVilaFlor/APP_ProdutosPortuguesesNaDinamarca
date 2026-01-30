@@ -71,7 +71,6 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         <td style="padding:10px;border-bottom:1px solid #eee;">${escapeHtml(x.label)}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">${x.qty}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">${escapeHtml(formatEur(x.priceEur))}</td>
-        <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>${escapeHtml(formatEur(x.lineTotalEur))}</strong></td>
       </tr>`
     )
     .join("");
@@ -90,7 +89,6 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
           <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Artigo</th>
           <th style="padding:10px;text-align:center;border-bottom:1px solid #eee;">Qtd</th>
           <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço</th>
-          <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Subtotal</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
@@ -101,11 +99,11 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         </tr>
         <tr>
           <td colspan="3" style="padding:12px;text-align:right;">Transporte</td>
-          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.transport))}</strong></td>
+          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(20))}</strong></td>
         </tr>
         <tr>
           <td colspan="3" style="padding:12px;text-align:right;"><strong>TOTAL ESTIMADO</strong></td>
-          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.total))}</strong></td>
+          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.total+20))}</strong></td>
         </tr>
       </tfoot>
     </table>
@@ -210,8 +208,10 @@ Inês
       <div style="font-family:Arial,sans-serif;color:#111;">
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
-        <span style="color:#555;">Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para fazeres o pagamento e procedermos à compra dos teus artigos.
-        Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na caixa, enviaremos foto para te provar o espaço e a razão para o valor final.</span></p>
+        <p>Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para procedermos ao pagamento e à compra dos teus artigos.<br/>
+        <p>Recebemos a tua reserva ✅<br/>
+        <span style="color:#555;">
+        Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e a motivo para o valor final.</span></p>
 
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
