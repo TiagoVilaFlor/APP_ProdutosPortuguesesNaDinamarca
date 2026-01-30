@@ -251,6 +251,9 @@ export default function ReviewPage() {
               {status && (
                 <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm">{status}</div>
               )}
+              <p className="mt-2 text-xs text-neutral-500">
+                *Ao clicar no botão "Confirmar e submeter", pode demorar alguns segundos até ver a página de sucesso. Obrigado pela compreensão.
+              </p>
             </form>
           )}
         </>
