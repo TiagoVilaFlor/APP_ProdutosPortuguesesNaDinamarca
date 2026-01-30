@@ -204,7 +204,7 @@ export default function ReviewPage() {
             </div>
           </div>
 
-          <div className="h-16" />
+          <div className="mt-5" />
 
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
             <h2 className="font-semibold">Os meus dados</h2>
@@ -258,11 +258,6 @@ export default function ReviewPage() {
             Confirmo que pretendo submeter esta reserva com o conhecimento de
             ser uma compra pessoal e em envio comunitário.
           </label>
-
-          <div className="mt-2 text-xs text-neutral-600">
-            Total estimado a submeter:{" "}
-            <span className="font-semibold">{formatEur(total)}</span>
-          </div>
           </div>
 
           <div className="mt-4 flex gap-3">
