@@ -174,43 +174,15 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O total final vai ser confirmado por email. 
-                **Uma vez que este servico é comunitário e pessoal não serão emitidas faturas.
+                O total final vai ser confirmado por email após embalamento. 
+              </p>
+              <p className="mt-2 text-xs text-neutral-500">
+                *Uma vez que este servico é comunitário e pessoal não serão emitidas faturas.
               </p>
             </div>
           </div>
 
-          <div className="mt-6 flex gap-3">
-            <button
-              className="flex-1 rounded-xl border px-4 py-3"
-              onClick={() => {
-                clear();
-                router.push("/");
-              }}
-            >
-              Cancelar tudo
-            </button>
-
-            <button
-              className="flex-1 rounded-xl bg-black px-4 py-3 text-white font-medium"
-              onClick={() => {
-                setShowForm(true);
-                setTimeout(() => {
-                  formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 100);
-              }}
-            >
-              Submeter reserva
-            </button>
-          </div>
-
-          {showForm && (
-            <form
-              ref={formRef}
-              onSubmit={submit}
-              className="mt-6 rounded-2xl border border-neutral-200 p-4"
-            >
-              <h2 className="font-semibold">Os meus dados</h2>
+          <h2 className="font-semibold">Os meus dados</h2>
 
               <label className="mt-3 block text-sm">
                 Nome
@@ -271,6 +243,37 @@ export default function ReviewPage() {
               {status && (
                 <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm">{status}</div>
               )}
+
+          <div className="mt-6 flex gap-3">
+            <button
+              className="flex-1 rounded-xl border px-4 py-3"
+              onClick={() => {
+                clear();
+                router.push("/");
+              }}
+            >
+              Cancelar tudo
+            </button>
+
+            <button
+              className="flex-1 rounded-xl bg-black px-4 py-3 text-white font-medium"
+              onClick={() => {
+                setShowForm(true);
+                setTimeout(() => {
+                  formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
+              }}
+            >
+              Submeter reserva
+            </button>
+          </div>
+
+          {showForm && (
+            <form
+              ref={formRef}
+              onSubmit={submit}
+              className="mt-6 rounded-2xl border border-neutral-200 p-4"
+            >
             </form>
           )}
         </>
