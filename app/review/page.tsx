@@ -199,12 +199,12 @@ export default function ReviewPage() {
 
               <label className="mt-3 block text-sm">
                 Email
-                <input name="email" type="email" required className="mt-1 w-full rounded-lg border px-3 py-2" />
+                <input name="email" type="email" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required className="mt-1 w-full rounded-lg border px-3 py-2" />
               </label>
 
               <label className="mt-3 block text-sm">
                 Telefone
-                <input name="address" type="tel" placeholder="12-12-12-12 or 123-123-123" required pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}|[0-9]{8}" className="mt-1 w-full rounded-lg border px-3 py-2"/>
+                <input name="address" type="tel" placeholder="Ex: 12-12-12-12 or 123-123-123" required pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}|[0-9]{8}" className="mt-1 w-full rounded-lg border px-3 py-2"/>
               </label>
 
               <label className="mt-3 block text-sm">
