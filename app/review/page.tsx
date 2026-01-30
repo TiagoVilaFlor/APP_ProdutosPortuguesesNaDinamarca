@@ -179,31 +179,7 @@ export default function ReviewPage() {
             </div>
           </div>
 
-          <div className="mt-6 flex gap-3">
-            <button
-              className="flex-1 rounded-xl border px-4 py-3"
-              onClick={() => {
-                clear();
-                router.push("/");
-              }}
-            >
-              Cancelar tudo
-            </button>
-
-            <button
-              className="flex-1 rounded-xl bg-black px-4 py-3 text-white font-medium"
-              onClick={() => {
-                setShowForm(true);
-                setTimeout(() => {
-                  formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 100);
-              }}
-            >
-              Submeter reserva
-            </button>
-          </div>
-
-          {showForm && (
+          {(
             <form
               ref={formRef}
               onSubmit={submit}
@@ -252,9 +228,12 @@ export default function ReviewPage() {
               </div>
 
               <div className="mt-4 flex gap-3">
-                <button type="button" className="flex-1 rounded-xl border px-4 py-3" onClick={() => setShowForm(false)}>
-                  Voltar
-                </button>
+                <button className="flex-1 rounded-xl border px-4 py-3"
+                  onClick={() => {
+                    clear();
+                    router.push("/");
+                  }}
+                >Cancelar tudo</button>
                 <button
                   type="submit"
                   disabled={!agree}
