@@ -166,7 +166,8 @@ export default function ReviewPage() {
                 <div className="text-sm text-neutral-700">Transporte</div>
                 <div className="font-semibold">{formatEur(transport)}</div>
               </div>
-              <p className="mt-2 text-xs text-neutral-500"> Este valor é figurativo, vamos confirmar posteriormente por email face ao volume total dos teus artigos. </p>
+              <p className="mt-2 text-xs text-neutral-500"> Este valor é figurativo, vamos confirmar posteriormente por
+                email face ao volume total dos teus artigos. </p>
 
               <div className="mt-3 border-t border-neutral-200 pt-3 flex items-center justify-between">
                 <div className="text-base font-semibold">Total estimado</div>
@@ -174,7 +175,11 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O total final vai ser confirmado por email.
+                O total final vai ser confirmado por email após embalamento.
+              </p>
+              <p className="mt-2 text-xs text-neutral-500">
+                *Uma vez que este serviço é comunitário e pessoal não serão
+                emitidas faturas.
               </p>
             </div>
           </div>
@@ -185,7 +190,7 @@ export default function ReviewPage() {
               onSubmit={submit}
               className="mt-6 rounded-2xl border border-neutral-200 p-4"
             >
-              <h2 className="font-semibold">Os teus dados</h2>
+              <h2 className="font-semibold">Os meus dados</h2>
 
               <label className="mt-3 block text-sm">
                 Nome
@@ -198,8 +203,8 @@ export default function ReviewPage() {
               </label>
 
               <label className="mt-3 block text-sm">
-                Morada
-                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2" rows={3} />
+                Telefone
+                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2"/>
               </label>
 
               <label className="mt-3 block text-sm">
@@ -208,7 +213,7 @@ export default function ReviewPage() {
                   name="notes"
                   className="mt-1 w-full rounded-lg border px-3 py-2"
                   rows={2}
-                  placeholder="Ex.: preferia levantar sábado de manhã…"
+                  placeholder="Ex.: preferia receber a encomenda em casa…"
                 />
               </label>
 
@@ -220,12 +225,9 @@ export default function ReviewPage() {
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                 />
-                Confirmo que pretendo submeter esta reserva.
+                Confirmo que pretendo submeter esta reserva com o conhecimento de
+            ser uma compra pessoal e em envio comunitário.
               </label>
-
-              <div className="mt-2 text-xs text-neutral-600">
-                Total estimado a submeter: <span className="font-semibold">{formatEur(total)}</span>
-              </div>
 
               <div className="mt-4 flex gap-3">
                 <button className="flex-1 rounded-xl border px-4 py-3"
