@@ -11,9 +11,6 @@ export default function SuccessPage() {
       </div>
 
       <div className="mt-6 space-y-3">
-        <Link href="/select" className="block w-full rounded-xl border px-4 py-3 text-center">
-          Fazer outra reserva
-        </Link>
         <Link href="/" className="block w-full rounded-xl bg-black px-4 py-3 text-center text-white font-semibold">
           Voltar ao início
         </Link>
