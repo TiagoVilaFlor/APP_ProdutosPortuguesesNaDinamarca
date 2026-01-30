@@ -3,11 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import {
-  formatEur,
-  SHIPPING_EUR_PER_BOX,
-  BOX_CAPACITY_LITERS,
-} from "@/app/data/catalog";
+import { formatEur, SHIPPING_EUR_PER_BOX, BOX_CAPACITY_LITERS } from "@/app/data/catalog";
 import { useCart } from "@/app/store/cart";
 
 export default function ReviewPage() {
@@ -37,7 +33,7 @@ export default function ReviewPage() {
   const liters = totalLiters();
 
   // Transporte: 20€ por caixa (estimado)
-  const transport = 20;
+  const transport = 20
 
   // TOTAL = subtotal + transporte
   const total = useMemo(() => subtotal + transport, [subtotal, transport]);
@@ -65,8 +61,7 @@ export default function ReviewPage() {
       totalEur: total,
     };
 
-    if (!payload.agree)
-      return setStatus("Tens de confirmar a checkbox para submeter a reserva.");
+    if (!payload.agree) return setStatus("Tens de confirmar a checkbox para submeter a reserva.");
 
     const res = await fetch("/api/reserve", {
       method: "POST",
@@ -91,12 +86,10 @@ export default function ReviewPage() {
         <div className="mx-auto max-w-md bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
           <h1 className="text-lg font-semibold">Checkout</h1>
 
-          <Link
-            href="/select"
-            className="rounded-full bg-black text-white px-4 py-2 text-xs font-medium shadow"
-          >
+          <Link href="/select" className="rounded-full bg-black text-white px-4 py-2 text-xs font-medium shadow">
             ← Voltar e editar
           </Link>
+
         </div>
       </div>
 
@@ -114,10 +107,7 @@ export default function ReviewPage() {
         <>
           <div className="mt-4 space-y-3">
             {lines.map((l) => (
-              <div
-                key={l.itemId}
-                className="rounded-2xl border border-neutral-200 p-4"
-              >
+              <div key={l.itemId} className="rounded-2xl border border-neutral-200 p-4">
                 <div className="flex items-start justify-between gap-3">
                   {/* LEFT: IMAGE + TEXT */}
                   <div className="flex items-start gap-3">
@@ -130,17 +120,12 @@ export default function ReviewPage() {
                     <div>
                       <div className="font-medium">{l.name}</div>
                       <div className="text-xs text-neutral-500">
-                        {[l.unitLabel, formatEur(l.priceEur)]
-                          .filter(Boolean)
-                          .join(" • ")}
+                        {[l.unitLabel, formatEur(l.priceEur)].filter(Boolean).join(" • ")}
                       </div>
                     </div>
                   </div>
 
-                  <button
-                    className="text-sm underline"
-                    onClick={() => remove(l.itemId)}
-                  >
+                  <button className="text-sm underline" onClick={() => remove(l.itemId)}>
                     Remover
                   </button>
                 </div>
@@ -164,9 +149,7 @@ export default function ReviewPage() {
                     </button>
                   </div>
 
-                  <div className="text-sm font-semibold">
-                    {formatEur(l.priceEur * l.qty)}
-                  </div>
+                  <div className="text-sm font-semibold">{formatEur(l.priceEur * l.qty)}</div>
                 </div>
               </div>
             ))}
@@ -183,11 +166,7 @@ export default function ReviewPage() {
                 <div className="text-sm text-neutral-700">Transporte</div>
                 <div className="font-semibold">{formatEur(transport)}</div>
               </div>
-              <p className="mt-2 text-xs text-neutral-500">
-                {" "}
-                Este valor é figurativo, vamos confirmar posteriormente por
-                email face ao volume total dos teus artigos.{" "}
-              </p>
+              <p className="mt-2 text-xs text-neutral-500"> Este valor é figurativo, vamos confirmar posteriormente por email face ao volume total dos teus artigos. </p>
 
               <div className="mt-3 border-t border-neutral-200 pt-3 flex items-center justify-between">
                 <div className="text-base font-semibold">Total estimado</div>
@@ -195,72 +174,12 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O total final vai ser confirmado por email após embalamento.
-              </p>
-              <p className="mt-2 text-xs text-neutral-500">
-                *Uma vez que este serviço é comunitário e pessoal não serão
-                emitidas faturas.
+                O total final vai ser confirmado por email.
               </p>
             </div>
           </div>
 
-          <div className="mt-5" />
-
-          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-            <h2 className="font-semibold">Os meus dados</h2>
-
-          <label className="mt-3 block text-sm">
-            Nome
-            <input
-              name="name"
-              required
-              className="mt-1 w-full rounded-lg border px-3 py-2"
-            />
-          </label>
-
-          <label className="mt-3 block text-sm">
-            Email
-            <input
-              name="email"
-              type="email"
-              required
-              className="mt-1 w-full rounded-lg border px-3 py-2"
-            />
-          </label>
-
-          <label className="mt-3 block text-sm">
-            Telefone
-            <textarea
-              name="address"
-              required
-              className="mt-1 w-full rounded-lg border px-3 py-2"
-            />
-          </label>
-
-          <label className="mt-3 block text-sm">
-            Notas (opcional)
-            <textarea
-              name="notes"
-              className="mt-1 w-full rounded-lg border px-3 py-2"
-              rows={2}
-              placeholder="Ex.: preferia levantar sábado de manhã…"
-            />
-          </label>
-
-          <label className="mt-3 flex items-center gap-2 text-sm">
-            <input
-              name="agree"
-              type="checkbox"
-              className="h-4 w-4"
-              checked={agree}
-              onChange={(e) => setAgree(e.target.checked)}
-            />
-            Confirmo que pretendo submeter esta reserva com o conhecimento de
-            ser uma compra pessoal e em envio comunitário.
-          </label>
-          </div>
-
-          <div className="mt-4 flex gap-3">
+          <div className="mt-6 flex gap-3">
             <button
               className="flex-1 rounded-xl border px-4 py-3"
               onClick={() => {
@@ -272,23 +191,86 @@ export default function ReviewPage() {
             </button>
 
             <button
-              type="submit"
-              disabled={!agree}
-              className={`flex-1 rounded-xl px-4 py-3 font-medium transition ${
-                agree
-                  ? "bg-black text-white"
-                  : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
-              }`}
-              onClick={submit}
+              className="flex-1 rounded-xl bg-black px-4 py-3 text-white font-medium"
+              onClick={() => {
+                setShowForm(true);
+                setTimeout(() => {
+                  formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
+              }}
             >
-              Confirmar e submeter
+              Submeter reserva
             </button>
           </div>
 
-          {status && (
-            <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm">
-              {status}
-            </div>
+          {showForm && (
+            <form
+              ref={formRef}
+              onSubmit={submit}
+              className="mt-6 rounded-2xl border border-neutral-200 p-4"
+            >
+              <h2 className="font-semibold">Os teus dados</h2>
+
+              <label className="mt-3 block text-sm">
+                Nome
+                <input name="name" required className="mt-1 w-full rounded-lg border px-3 py-2" />
+              </label>
+
+              <label className="mt-3 block text-sm">
+                Email
+                <input name="email" type="email" required className="mt-1 w-full rounded-lg border px-3 py-2" />
+              </label>
+
+              <label className="mt-3 block text-sm">
+                Morada
+                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2" rows={3} />
+              </label>
+
+              <label className="mt-3 block text-sm">
+                Notas (opcional)
+                <textarea
+                  name="notes"
+                  className="mt-1 w-full rounded-lg border px-3 py-2"
+                  rows={2}
+                  placeholder="Ex.: preferia levantar sábado de manhã…"
+                />
+              </label>
+
+              <label className="mt-3 flex items-center gap-2 text-sm">
+                <input
+                  name="agree"
+                  type="checkbox"
+                  className="h-4 w-4"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                />
+                Confirmo que pretendo submeter esta reserva.
+              </label>
+
+              <div className="mt-2 text-xs text-neutral-600">
+                Total estimado a submeter: <span className="font-semibold">{formatEur(total)}</span>
+              </div>
+
+              <div className="mt-4 flex gap-3">
+                <button type="button" className="flex-1 rounded-xl border px-4 py-3" onClick={() => setShowForm(false)}>
+                  Voltar
+                </button>
+                <button
+                  type="submit"
+                  disabled={!agree}
+                  className={`flex-1 rounded-xl px-4 py-3 font-medium transition ${agree
+                    ? "bg-black text-white"
+                    : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+                    }`}
+                >
+                  Confirmar e submeter
+                </button>
+              </div>
+
+              {status && (
+                <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm">{status}</div>
+              )}
+            </form>
           )}
         </>
       )}
