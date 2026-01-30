@@ -215,6 +215,8 @@ Inês
 
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
+        ${body.notes?.trim() ? `<p><strong>Notas:</strong><br/>${escapeHtml(body.notes.trim())}</p>` : ""}
+
         ${htmlSummary}
 
         <p style="margin-top:14px;color:#555;">Obrigado,<br/>Terra das Lanchas</p>
