@@ -78,9 +78,6 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
   return `
   <div style="font-family:Arial,sans-serif;line-height:1.4;color:#111;">
     <h2 style="margin:0 0 10px;">Resumo da reserva</h2>
-    <p style="margin:0 0 14px;color:#444;">
-      Isto é uma <strong>reserva</strong> (sem pagamento online). Vamos confirmar detalhes por email.
-    </p>
 
     <table style="width:100%;border-collapse:collapse;border:1px solid #eee;border-radius:12px;overflow:hidden;">
       <thead>
@@ -98,7 +95,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.subtotal))}</strong></td>
         </tr>
         <tr>
-          <td colspan="3" style="padding:12px;text-align:right;">Transporte</td>
+          <td colspan="3" style="padding:12px;text-align:right;">Transporte (tbc)</td>
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(20))}</strong></td>
         </tr>
         <tr>
@@ -191,7 +188,7 @@ Inês
         <h2>Nova reserva recebida</h2>
         <p><strong>Nome:</strong> ${escapeHtml(body.name)}<br/>
            <strong>Email:</strong> ${escapeHtml(body.email)}<br/>
-           <strong>Morada:</strong> ${escapeHtml(body.address)}<br/>
+           <strong>Telefone para contacto:</strong> ${escapeHtml(body.address)}<br/>
            ${body.notes?.trim() ? `<strong>Notas:</strong> ${escapeHtml(body.notes.trim())}` : ""}
         </p>
         ${htmlSummary}
@@ -209,10 +206,8 @@ Inês
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
         <p>Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para procedermos ao pagamento e à compra dos teus artigos.<br/>
-        <p>Recebemos a tua reserva ✅<br/>
-        <span style="color:#555;">
-        Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e a motivo para o valor final.</span></p>
-
+        <p>Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e a motivo para o valor final.<br/>
+        
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
         ${body.notes?.trim() ? `<p><strong>Notas:</strong><br/>${escapeHtml(body.notes.trim())}</p>` : ""}
