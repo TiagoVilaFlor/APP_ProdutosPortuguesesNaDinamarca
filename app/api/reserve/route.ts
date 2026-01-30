@@ -214,7 +214,7 @@ Inês
 
         ${htmlSummary}
 
-        <p style="margin-top:14px;color:#555;">Obrigado,<br/>Terra das Lanchas</p>
+        <p style="margin-top:14px;color:#555;">Obrigado,<br/>Produtos Portugueses na Dinamarca</p>
       </div>
     `,
   });
