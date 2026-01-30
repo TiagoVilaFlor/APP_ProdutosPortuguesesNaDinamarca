@@ -204,7 +204,7 @@ export default function ReviewPage() {
 
               <label className="mt-3 block text-sm">
                 Telefone
-                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2"/>
+                <input name="address" required className="mt-1 w-full rounded-lg border px-3 py-2"/>
               </label>
 
               <label className="mt-3 block text-sm">
