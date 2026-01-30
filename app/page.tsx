@@ -9,7 +9,7 @@ export default function Home() {
         className="mt-4 mb-4 w-full h-64 object-cover rounded-2xl"
       />
       <p className="mt-3 text-neutral-700">
-        Estamos a testar uma nova forma simples de reservar produtos portugueses na Dinamarca.
+        Olá Portugueses, estamos a testar uma nova forma simples e comunitária de reservar produtos portugueses na Dinamarca.
 O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
       </p>
 
@@ -19,7 +19,7 @@ O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
           <li>Seleciona os produtos e quantidades</li>
           <li>Revê o carrinho</li>
           <li>Submete a reserva e recebes confirmação por email</li>
-          <li>Quando houver volume suficiente para fazer uma palette, informamos para pagamento</li>
+          <li>Quando houver volume suficiente para trazer uma nova palette (esperemos mensalmente), informamos para pagamento</li>
         </ol>
       </div>
 
@@ -27,7 +27,7 @@ O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
         <div className="font-semibold">Como calculamos o custo</div>
         <ol className="mt-2 list-decimal pl-5 space-y-1">
           <li>Preço dos produtos selecionados</li>
-          <li>Transporte: 20€ por caixa de 20L (35*28*33cm) (partilhada com outros clientes sempre que possível para reduzir custos)</li>
+          <li>Transporte base: 20€ máximo por caixa de 20L (35*28*33cm) (partilhada com outros clientes sempre que possível para reduzir custos, o que pode ficar a menos de 20€)</li>
         </ol>
       </div>
 
@@ -42,6 +42,7 @@ O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
 
       <p className="mt-4 text-xs text-neutral-500">
         *Isto não é um compra imediata, apenas uma reserva sem compromisso
+        **Uma vez que este servico é comunitário e pessoal não serão emitidas faturas.
       </p>
     </main>
   );
