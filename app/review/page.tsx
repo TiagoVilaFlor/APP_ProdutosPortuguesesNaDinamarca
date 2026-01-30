@@ -199,7 +199,7 @@ export default function ReviewPage() {
 
               <label className="mt-3 block text-sm">
                 Email
-                <input name="email" type="email" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required className="mt-1 w-full rounded-lg border px-3 py-2" />
+                <input name="email" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required className="mt-1 w-full rounded-lg border px-3 py-2" />
               </label>
 
               <label className="mt-3 block text-sm">
