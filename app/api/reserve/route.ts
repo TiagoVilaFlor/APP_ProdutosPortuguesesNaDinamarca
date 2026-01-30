@@ -210,10 +210,10 @@ Inês
       <div style="font-family:Arial,sans-serif;color:#111;">
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
-        <span style="color:#555;">(Reserva sem pagamento online — vamos confirmar detalhes por email.)</span></p>
+        <span style="color:#555;">Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para fazeres o pagamento e procedermos à compra dos teus artigos.
+        Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na caixa, enviaremos foto para te provar o espaço e a razão para o valor final.</span></p>
 
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
-        ${body.notes?.trim() ? `<p><strong>Notas:</strong><br/>${escapeHtml(body.notes.trim())}</p>` : ""}
 
         ${htmlSummary}
 
