@@ -181,9 +181,9 @@ export default function ReviewPage() {
               </p>
             </div>
           </div>
-
-          <hr></hr>
+          
           <div className="h-16" />
+          <hr></hr>
           <h2 className="font-semibold">Os meus dados</h2>
 
               <label className="mt-3 block text-sm">
@@ -198,7 +198,7 @@ export default function ReviewPage() {
 
               <label className="mt-3 block text-sm">
                 Telefone
-                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2" rows={3} />
+                <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2" />
               </label>
 
               <label className="mt-3 block text-sm">
