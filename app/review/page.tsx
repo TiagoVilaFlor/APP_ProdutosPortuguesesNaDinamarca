@@ -174,7 +174,8 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O total final vai ser confirmado por email.
+                O total final vai ser confirmado por email. 
+                **Uma vez que este servico é comunitário e pessoal não serão emitidas faturas.
               </p>
             </div>
           </div>
@@ -209,7 +210,7 @@ export default function ReviewPage() {
               onSubmit={submit}
               className="mt-6 rounded-2xl border border-neutral-200 p-4"
             >
-              <h2 className="font-semibold">Os teus dados</h2>
+              <h2 className="font-semibold">Os meus dados</h2>
 
               <label className="mt-3 block text-sm">
                 Nome
@@ -222,7 +223,7 @@ export default function ReviewPage() {
               </label>
 
               <label className="mt-3 block text-sm">
-                Morada
+                Telefone
                 <textarea name="address" required className="mt-1 w-full rounded-lg border px-3 py-2" rows={3} />
               </label>
 
@@ -244,7 +245,7 @@ export default function ReviewPage() {
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                 />
-                Confirmo que pretendo submeter esta reserva.
+                Confirmo que pretendo submeter esta reserva com o conhecimento de ser uma compra pessoal e em envio comunitário.
               </label>
 
               <div className="mt-2 text-xs text-neutral-600">
