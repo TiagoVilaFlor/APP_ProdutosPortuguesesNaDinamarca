@@ -206,7 +206,7 @@ Inês
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
         <p>Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para procedermos ao pagamento e à compra dos teus artigos.<br/>
-        <p>Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e a motivo para o valor final.<br/>
+        <p>Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e o valor final.<br/>
         
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
