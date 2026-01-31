@@ -17,13 +17,13 @@ export function ItemModal({
   function handleAdd() {
     add({
       itemId: item.id!,                     // obrigatório
-    name: item.name ?? "Produto sem nome", // fallback seguro
-    priceEur: item.priceEur ?? 0,          // fallback seguro
-    categoryId: item.categoryId,
-    unitLabel: item.unitLabel,
-    volumeLiters: item.volumeLiters,
-    image: item.image,
-    description: item.description ?? "",
+      name: item.name ?? "Produto sem nome", // fallback seguro
+      priceEur: item.priceEur ?? 0,          // fallback seguro
+      categoryId: item.categoryId,
+      unitLabel: item.unitLabel,
+      volumeLiters: item.volumeLiters,
+      image: item.image,
+      description: item.description ?? "",
     });
     onClose(); // fecha modal depois de adicionar
   }
@@ -46,18 +46,20 @@ export function ItemModal({
         </button>
 
         {/* Image */}
-        <img
-          src={item.image}
-          alt={item.name}
-          className="w-full h-48 object-cover rounded-xl border"
-        />
+        <div className="flex items-center justify-center bg-neutral-50 rounded-xl p-4">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full max-h-72 object-contain"
+          />
+        </div>
 
         {/* Title */}
         <h2 className="mt-3 text-lg font-semibold">{item.name}</h2>
 
         {/* Description */}
         <p className="mt-2 text-sm text-neutral-600">
-          {item.description || "Produto selecionado Terra das Lanchas."}
+          {item.description || "Produto selecionado."}
         </p>
 
         {/* Price */}
