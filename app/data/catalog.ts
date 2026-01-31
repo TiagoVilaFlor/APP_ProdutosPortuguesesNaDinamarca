@@ -30,8 +30,4 @@ export const fallbackCategories: Category[] = [
 ];
 
 export const fallbackItems: CatalogItem[] = [
-  { id: "tdl-azeite-500", name: "Azeite Terra das Lanchas", unitLabel: "500ml", categoryId: "azeites", priceEur: 12.5, volumeLiters: 0.5 },
-  { id: "tdl-azeite-1l",  name: "Azeite Terra das Lanchas", unitLabel: "1L",    categoryId: "azeites", priceEur: 22.0, volumeLiters: 1 },
-  { id: "sardinha-pt",    name: "Sardinha em azeite",       categoryId: "conservas", priceEur: 4.5, volumeLiters: 0 },
-  { id: "doce-figo",      name: "Doce de figo",             categoryId: "doces", priceEur: 5.5, volumeLiters: 0 },
 ];
