@@ -82,7 +82,7 @@ export function ItemModal({
 
           {/* Description */}
           <p className="mt-2 text-sm text-neutral-600">
-            {item.description || "Produto selecionado Terra das Lanchas."}
+            {item.description}
           </p>
 
           {/* Price */}
