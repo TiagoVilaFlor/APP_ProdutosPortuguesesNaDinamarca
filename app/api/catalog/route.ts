@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import Papa from "papaparse";
 
 export async function GET() {
   const url = process.env.NEXT_PUBLIC_CATALOG_URL;
@@ -11,33 +12,50 @@ export async function GET() {
     });
   }
 
-  const res = await fetch(url);
-  const text = await res.text();
+  const res = await fetch(url, { cache: "no-store" });
+  const csvText = await res.text();
 
-  const rows = text.split("\n").slice(1);
+  const parsed = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  if (parsed.errors.length) {
+    console.error("CSV parse errors:", parsed.errors);
+  }
+
+  const rows = parsed.data as any[];
+
+  // MAP ITEMS (SAFE)
   const items = rows
-    .map((r) => {
-      const [id, categoryId, name, priceEur, image, description, active, order] =
-        r.split(",");
+    .map((r) => ({
+      id: r.id?.trim(),
+      categoryId: r.categoryid?.trim(),
+      name: r.name?.trim(),
+      priceEur: Number(r.priceEur),
+      image: r.image || "",
+      description: r.description || "",
+      active: r.active !== "no",
+      order: Number(r.order || 0),
+    }))
+    .filter(
+      (i) =>
+        i.id &&
+        i.categoryId &&
+        i.name &&
+        !Number.isNaN(i.priceEur) &&
+        i.active
+    );
 
-      return {
-        id,
-        categoryId,
-        name,
-        priceEur: Number(priceEur),
-        image,
-        description,
-        active,
-        order: Number(order),
-      };
-    })
-    .filter((i) => i.id && i.active !== "no");
+  // BUILD CATEGORIES (CLEAN)
+  const catMap = new Map<string, { id: string; name: string }>();
 
-  // categories auto
-  const catMap = new Map();
   items.forEach((i) => {
     if (!catMap.has(i.categoryId)) {
-      catMap.set(i.categoryId, { id: i.categoryId, name: i.categoryId });
+      catMap.set(i.categoryId, {
+        id: i.categoryId,
+        name: i.categoryId,
+      });
     }
   });
 
