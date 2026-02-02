@@ -12,64 +12,83 @@ export function ItemRow({ item }: { item: CatalogItem }) {
   const [openItem, setOpenItem] = useState<CatalogItem | null>(null);
 
   return (
-    <div className="flex items-center justify-between py-3">
-      <div className="flex items-center gap-3 pr-3">
-
-        {/* IMAGEM DO PRODUTO */}
+    <div className="flex items-center gap-3 py-3">
+      {/* IMAGE */}
+      <div className="flex-shrink-0">
         {item.image ? (
           <img
             src={item.image}
             alt={item.name}
-            className="h-12 w-12 rounded-xl object-cover border border-neutral-200"
+            className="h-12 w-12 rounded-xl object-cover border border-neutral-200 cursor-pointer"
             onClick={() => setOpenItem(item)}
           />
         ) : (
           <div className="h-12 w-12 rounded-xl bg-neutral-100 border border-neutral-200" />
         )}
-
-        {/* TEXTO DO PRODUTO */}
-        <div>
-          <div
-            className="font-medium cursor-pointer hover:underline"
-            onClick={() => setOpenItem(item)}
-          >{item.name}</div>
-          <div className="text-xs text-neutral-500">
-            {[item.unitLabel, formatEur(item.priceEur)].filter(Boolean).join(" • ")}
-          </div>
-        </div>
-
       </div>
 
-
-      {qty === 0 ? (
-        <button
-          className="rounded-lg bg-neutral-900 px-3 py-2 text-sm text-white"
-          onClick={() =>
-            add({
-              itemId: item.id,
-              name: item.name ?? "Produto sem nome",
-              categoryId: item.categoryId,
-              unitLabel: item.unitLabel,
-              priceEur: item.priceEur,
-              image: item.image,
-              volumeLiters: item.volumeLiters,
-              description: item.description,
-            })
-          }
+      {/* TEXT (flex + truncation) */}
+      <div className="flex-1 min-w-0">
+        <div
+          className="font-medium cursor-pointer hover:underline truncate"
+          onClick={() => setOpenItem(item)}
+          title={item.name}
         >
-          Adicionar
-        </button>
-      ) : (
-        <div className="flex items-center gap-2">
-          <button className="h-9 w-9 rounded-lg border" onClick={() => setQty(item.id, qty - 1)}>-</button>
-          <div className="w-6 text-center font-medium">{qty}</div>
-          <button className="h-9 w-9 rounded-lg border" onClick={() => setQty(item.id, qty + 1)}>+</button>
+          {item.name}
         </div>
-      )}
+
+        <div className="text-xs text-neutral-500 mt-0.5 truncate">
+          {[item.unitLabel, formatEur(item.priceEur)]
+            .filter(Boolean)
+            .join(" • ")}
+        </div>
+      </div>
+
+      {/* ACTIONS (fixed width) */}
+      <div className="flex-shrink-0 w-[88px] flex justify-end">
+        {qty === 0 ? (
+          <button
+            className="rounded-lg bg-neutral-900 px-3 py-2 text-sm text-white w-full"
+            onClick={() =>
+              add({
+                itemId: item.id,
+                name: item.name ?? "Produto sem nome",
+                categoryId: item.categoryId,
+                unitLabel: item.unitLabel,
+                priceEur: item.priceEur,
+                image: item.image,
+                volumeLiters: item.volumeLiters,
+                description: item.description,
+              })
+            }
+          >
+            Adicionar
+          </button>
+        ) : (
+          <div className="flex items-center gap-1 w-full justify-between">
+            <button
+              className="h-9 w-9 rounded-lg border"
+              onClick={() => setQty(item.id, qty - 1)}
+            >
+              −
+            </button>
+            <div className="w-4 text-center font-medium text-sm">
+              {qty}
+            </div>
+            <button
+              className="h-9 w-9 rounded-lg border"
+              onClick={() => setQty(item.id, qty + 1)}
+            >
+              +
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* MODAL */}
       {openItem && (
         <ItemModal item={openItem} onClose={() => setOpenItem(null)} />
       )}
-
     </div>
   );
 }
