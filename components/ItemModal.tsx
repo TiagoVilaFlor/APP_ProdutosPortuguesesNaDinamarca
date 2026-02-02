@@ -1,8 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CatalogItem } from "@/app/data/catalog";
 import { useCart } from "@/app/store/cart";
+
+function renderParagraphs(text?: string) {
+  if (!text) return null;
+
+  // Normaliza quebras Windows e remove espaços extra
+  const normalized = text.replace(/\r\n/g, "\n").trim();
+
+  // Separa por blocos (linhas em branco = novo parágrafo)
+  const blocks = normalized.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
+
+  // Se não houver parágrafos, ainda preserva quebras simples
+  if (blocks.length <= 1) {
+    return (
+      <p className="text-sm text-neutral-600 leading-relaxed whitespace-pre-line">
+        {normalized}
+      </p>
+    );
+  }
+
+  return blocks.map((p, i) => (
+    <p key={i} className="mb-3 text-sm text-neutral-600 leading-relaxed whitespace-pre-line">
+      {p}
+    </p>
+  ));
+}
 
 export function ItemModal({
   item,
@@ -13,6 +38,8 @@ export function ItemModal({
 }) {
   const { add } = useCart();
   const [zoomOpen, setZoomOpen] = useState(false);
+
+  const hasImage = Boolean(item.image);
 
   // Fechar com ESC
   useEffect(() => {
@@ -62,28 +89,47 @@ export function ItemModal({
 
           {/* Image */}
           <div
-            className="flex items-center justify-center bg-neutral-50 rounded-xl p-4 cursor-zoom-in"
-            onClick={() => setZoomOpen(true)}
+            className={[
+              "flex items-center justify-center bg-neutral-50 rounded-xl p-4",
+              hasImage ? "cursor-zoom-in" : "cursor-default",
+            ].join(" ")}
+            onClick={() => {
+              if (hasImage) setZoomOpen(true);
+            }}
           >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full max-h-72 object-contain"
-            />
+            {hasImage ? (
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full max-h-72 object-contain"
+              />
+            ) : (
+              <div className="w-full h-40 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center text-sm text-neutral-500">
+                Sem imagem disponível
+              </div>
+            )}
           </div>
 
           {/* Hint */}
-          <div className="mt-1 text-xs text-neutral-400 text-center">
-            Clica na imagem para ampliar
-          </div>
+          {hasImage && (
+            <div className="mt-1 text-xs text-neutral-400 text-center">
+              Clica na imagem para ampliar
+            </div>
+          )}
 
           {/* Title */}
           <h2 className="mt-3 text-lg font-semibold">{item.name}</h2>
 
-          {/* Description */}
-          <p className="mt-2 text-sm text-neutral-600">
-            {item.description}
-          </p>
+          {/* Description (parágrafos) */}
+          <div className="mt-2">
+            {item.description ? (
+              renderParagraphs(item.description)
+            ) : (
+              <p className="text-sm text-neutral-600 leading-relaxed">
+                Produto selecionado.
+              </p>
+            )}
+          </div>
 
           {/* Price */}
           <div className="mt-3 text-lg font-semibold">
@@ -101,7 +147,7 @@ export function ItemModal({
       </div>
 
       {/* ================= ZOOM OVERLAY ================= */}
-      {zoomOpen && (
+      {zoomOpen && hasImage && (
         <div
           className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center cursor-zoom-out"
           onClick={() => setZoomOpen(false)}
