@@ -30,9 +30,8 @@ export function ItemRow({ item }: { item: CatalogItem }) {
       {/* TEXT (flex + truncation) */}
       <div className="flex-1 min-w-0">
         <div
-          className="font-medium cursor-pointer hover:underline truncate"
+          className="font-medium cursor-pointer hover:underline line-clamp-3"
           onClick={() => setOpenItem(item)}
-          title={item.name}
         >
           {item.name}
         </div>
