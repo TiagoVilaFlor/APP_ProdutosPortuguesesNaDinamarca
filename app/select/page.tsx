@@ -28,22 +28,38 @@ export default function SelectPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [openCategoryId, setOpenCategoryId] = useState<string>("");
 
-  // GROUP ITEMS BY CATEGORY
+  // 👉 ORDENAÇÃO INDEPENDENTE POR CATEGORIA
+  const [priceOrderByCat, setPriceOrderByCat] = useState<
+    Record<string, "asc" | "desc">
+  >({});
+
+  // GROUP ITEMS BY CATEGORY + SORT
   const grouped = useMemo(() => {
-    return (categories ?? []).map((c) => ({
-      ...c,
-      items: (items ?? []).filter((i) => i.categoryId === c.id),
-    }));
-  }, [categories, items]);
+    return (categories ?? []).map((c) => {
+      const order = priceOrderByCat[c.id] ?? "asc";
+
+      const categoryItems = (items ?? [])
+        .filter((i) => i.categoryId === c.id)
+        .slice()
+        .sort((a, b) => {
+          const pa = Number(a.priceEur ?? 0);
+          const pb = Number(b.priceEur ?? 0);
+          return order === "asc" ? pa - pb : pb - pa;
+        });
+
+      return {
+        ...c,
+        items: categoryItems,
+      };
+    });
+  }, [categories, items, priceOrderByCat]);
 
   const firstCatId = categories?.[0]?.id ?? "";
 
   // 🔥 SCROLL ROBUSTO PARA TOPO DA CATEGORIA
   function scrollToCategory(catId: string) {
-    // 1) abrir accordion primeiro
     setOpenCategoryId(catId);
 
-    // 2) esperar layout estabilizar (accordion + sticky)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const el = sectionRefs.current[catId];
@@ -54,7 +70,7 @@ export default function SelectPage() {
         const categoryNavHeight =
           categoryNav?.getBoundingClientRect().height ?? 0;
 
-        const extraOffset = 12; // espaço de conforto
+        const extraOffset = 12;
 
         const y =
           el.getBoundingClientRect().top +
@@ -90,7 +106,7 @@ export default function SelectPage() {
         </div>
       </div>
 
-      {/* Spacer for fixed header */}
+      {/* Spacer */}
       <div className="h-16" />
 
       {/* CATEGORY NAV */}
@@ -141,52 +157,65 @@ export default function SelectPage() {
       {/* PRODUCT LIST */}
       <div className="mx-auto max-w-md px-4 space-y-4 mt-4">
         {loading && (
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm text-neutral-700 shadow-sm">
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm">
             A carregar catálogo…
           </div>
         )}
 
-        {!loading && (categories?.length ?? 0) === 0 && (
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm text-red-600 shadow-sm">
-            ❌ Não foi possível carregar categorias.
-            Verifica o Google Sheet e o link em{" "}
-            <code>.env.local</code>.
-          </div>
-        )}
+        {grouped.map((g) => {
+          const order = priceOrderByCat[g.id] ?? "asc";
 
-        {grouped.map((g) => (
-          <div
-            key={g.id}
-            ref={(node) => {
-              sectionRefs.current[g.id] = node;
-            }}
-            className="scroll-mt-28"
-          >
-            <Accordion
-              title={g.name}
-              open={(openCategoryId || firstCatId) === g.id}
-              onToggle={() =>
-                setOpenCategoryId((prev) => {
-                  const cur = prev || firstCatId;
-                  return cur === g.id ? "" : g.id;
-                })
-              }
-              anchorId={`cat-${g.id}`}
+          return (
+            <div
+              key={g.id}
+              ref={(node) => {
+                sectionRefs.current[g.id] = node;
+              }}
+              className="scroll-mt-28"
             >
-              {g.items.length === 0 ? (
-                <p className="text-sm text-neutral-500">
-                  Sem produtos nesta categoria.
-                </p>
-              ) : (
-                <div className="divide-y divide-neutral-100">
-                  {g.items.map((it) => (
-                    <ItemRow key={it.id} item={it} />
-                  ))}
+              <Accordion
+                title={g.name}
+                open={(openCategoryId || firstCatId) === g.id}
+                onToggle={() =>
+                  setOpenCategoryId((prev) => {
+                    const cur = prev || firstCatId;
+                    return cur === g.id ? "" : g.id;
+                  })
+                }
+                anchorId={`cat-${g.id}`}
+              >
+                {/* SORT BUTTON */}
+                <div className="flex justify-end mb-2">
+                  <button
+                    onClick={() =>
+                      setPriceOrderByCat((prev) => ({
+                        ...prev,
+                        [g.id]: order === "asc" ? "desc" : "asc",
+                      }))
+                    }
+                    className="text-xs text-neutral-600 underline"
+                  >
+                    {order === "asc"
+                      ? "Ordenar por preço ↓"
+                      : "Ordenar por preço ↑"}
+                  </button>
                 </div>
-              )}
-            </Accordion>
-          </div>
-        ))}
+
+                {g.items.length === 0 ? (
+                  <p className="text-sm text-neutral-500">
+                    Sem produtos nesta categoria.
+                  </p>
+                ) : (
+                  <div className="divide-y divide-neutral-100">
+                    {g.items.map((it) => (
+                      <ItemRow key={it.id} item={it} />
+                    ))}
+                  </div>
+                )}
+              </Accordion>
+            </div>
+          );
+        })}
       </div>
 
       {/* BOTTOM SUMMARY BAR */}
