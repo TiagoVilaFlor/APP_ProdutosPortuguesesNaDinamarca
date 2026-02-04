@@ -12,18 +12,23 @@ export default function SelectPage() {
   // GOOGLE SHEET DATA
   const { loading, categories, items } = useCatalog();
 
+  // SCROLL REFS POR CATEGORIA
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   // CART
-  const { totalItems, subtotalEur, wantsTransport, transportEur, clear } = useCart();
+  const { totalItems, subtotalEur, wantsTransport, transportEur, clear } =
+    useCart();
 
   const count = totalItems();
   const subtotal = subtotalEur();
   const transport = transportEur();
-  const [visible, setVisible] = useState(false)
 
+  // UI STATE
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [openCategoryId, setOpenCategoryId] = useState<string>("");
 
-  // Group items by category
+  // GROUP ITEMS BY CATEGORY
   const grouped = useMemo(() => {
     return (categories ?? []).map((c) => ({
       ...c,
@@ -31,27 +36,47 @@ export default function SelectPage() {
     }));
   }, [categories, items]);
 
-  // Scroll to category refs
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const [openCategoryId, setOpenCategoryId] = useState<string>("");
+  const firstCatId = categories?.[0]?.id ?? "";
 
+  // 🔥 SCROLL ROBUSTO PARA TOPO DA CATEGORIA
   function scrollToCategory(catId: string) {
+    // 1) abrir accordion primeiro
     setOpenCategoryId(catId);
-    const el = sectionRefs.current[catId];
-    if (el) {
-      setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
-    }
-  }
 
-  const firstCatId = categories?.[0]?.id;
+    // 2) esperar layout estabilizar (accordion + sticky)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = sectionRefs.current[catId];
+        if (!el) return;
+
+        const fixedHeaderHeight = 64; // h-16
+        const categoryNav = document.getElementById("category-nav");
+        const categoryNavHeight =
+          categoryNav?.getBoundingClientRect().height ?? 0;
+
+        const extraOffset = 12; // espaço de conforto
+
+        const y =
+          el.getBoundingClientRect().top +
+          window.scrollY -
+          (fixedHeaderHeight + categoryNavHeight + extraOffset);
+
+        window.scrollTo({
+          top: y,
+          behavior: "smooth",
+        });
+      });
+    });
+  }
 
   return (
     <main className="pb-32 bg-neutral-50">
-
       {/* HEADER BAR */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-100"> {/* INNER APP WIDTH */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-100">
         <div className="mx-auto max-w-md bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
-          <h1 className="text-base font-medium tracking-tight">Explorar produtos</h1>
+          <h1 className="text-base font-medium tracking-tight">
+            Explorar produtos
+          </h1>
 
           <button
             onClick={() => {
@@ -66,10 +91,13 @@ export default function SelectPage() {
       </div>
 
       {/* Spacer for fixed header */}
-      <div className="h-16"></div>
+      <div className="h-16" />
 
       {/* CATEGORY NAV */}
-      <div className="sticky top-16 z-10 bg-white/90 backdrop-blur border-b border-neutral-200">
+      <div
+        id="category-nav"
+        className="sticky top-16 z-10 bg-white/90 backdrop-blur border-b border-neutral-200"
+      >
         <div className="mx-auto max-w-md px-4 py-4">
           <button
             className="flex items-center justify-between w-full px-4 py-3 rounded-lg border bg-white"
@@ -77,7 +105,8 @@ export default function SelectPage() {
           >
             <span className="font-semibold">
               {selectedCategory
-                ? "Categoria - " + categories.find(c => c.id === selectedCategory)?.name
+                ? "Categoria - " +
+                  categories?.find((c) => c.id === selectedCategory)?.name
                 : "Categorias"}
             </span>
             <span className="text-lg">
@@ -87,20 +116,18 @@ export default function SelectPage() {
 
           {categoriesOpen && (
             <div className="mt-3 flex flex-wrap gap-2">
-              {categories.map((cat) => (
+              {categories?.map((cat) => (
                 <button
                   key={cat.id}
-                  className={`px-4 py-2 rounded-full border text-sm
-          ${selectedCategory === cat.id
+                  className={`px-4 py-2 rounded-full border text-sm ${
+                    selectedCategory === cat.id
                       ? "bg-black text-white"
                       : "bg-white"
-                    }
-        `}
+                  }`}
                   onClick={() => {
-                    setSelectedCategory(cat.id); scrollToCategory(cat.id);
-
-                    // 🔥 AUTO-COLLAPSE AO SELECIONAR
+                    setSelectedCategory(cat.id);
                     setCategoriesOpen(false);
+                    scrollToCategory(cat.id);
                   }}
                 >
                   {cat.name}
@@ -122,7 +149,8 @@ export default function SelectPage() {
         {!loading && (categories?.length ?? 0) === 0 && (
           <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm text-red-600 shadow-sm">
             ❌ Não foi possível carregar categorias.
-            Verifica o Google Sheet e o link em <code>.env.local</code>.
+            Verifica o Google Sheet e o link em{" "}
+            <code>.env.local</code>.
           </div>
         )}
 
@@ -139,14 +167,16 @@ export default function SelectPage() {
               open={(openCategoryId || firstCatId) === g.id}
               onToggle={() =>
                 setOpenCategoryId((prev) => {
-                  const cur = prev || firstCatId || "";
+                  const cur = prev || firstCatId;
                   return cur === g.id ? "" : g.id;
                 })
               }
               anchorId={`cat-${g.id}`}
             >
               {g.items.length === 0 ? (
-                <p className="text-sm text-neutral-500">Sem produtos nesta categoria.</p>
+                <p className="text-sm text-neutral-500">
+                  Sem produtos nesta categoria.
+                </p>
               ) : (
                 <div className="divide-y divide-neutral-100">
                   {g.items.map((it) => (
@@ -163,19 +193,23 @@ export default function SelectPage() {
       {count > 0 && (
         <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-md border-t bg-white p-4 shadow-lg">
           <div className="flex items-start justify-between gap-3">
-
             <div className="text-sm text-neutral-700">
               <div className="font-medium">
                 {count} {count === 1 ? "item" : "itens"} no carrinho
               </div>
               <div className="text-xs mt-1">
-                Subtotal: <span className="font-semibold">{formatEur(subtotal)}</span>
+                Subtotal:{" "}
+                <span className="font-semibold">
+                  {formatEur(subtotal)}
+                </span>
               </div>
 
               {wantsTransport && (
                 <div className="text-xs text-neutral-600">
                   Transporte (estimado):{" "}
-                  <span className="font-semibold">{formatEur(transport)}</span>
+                  <span className="font-semibold">
+                    {formatEur(transport)}
+                  </span>
                 </div>
               )}
             </div>
