@@ -56,9 +56,10 @@ export default function SelectPage() {
 
   const firstCatId = categories?.[0]?.id ?? "";
 
-  // 🔥 SCROLL ROBUSTO PARA TOPO DA CATEGORIA
+  // 🔥 SCROLL ROBUSTO PARA TOPO DA CATEGORIA (fonte única de verdade)
   function scrollToCategory(catId: string) {
     setOpenCategoryId(catId);
+    setSelectedCategory(catId);
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -90,9 +91,7 @@ export default function SelectPage() {
       {/* HEADER BAR */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-100">
         <div className="mx-auto max-w-md bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
-          <h1 className="text-base font-medium tracking-tight">
-            Explorar produtos
-          </h1>
+          <h1 className="text-lg font-semibold">Explorar produtos</h1>
 
           <button
             onClick={() => {
@@ -122,7 +121,7 @@ export default function SelectPage() {
             <span className="font-semibold">
               {selectedCategory
                 ? "Categoria - " +
-                  categories?.find((c) => c.id === selectedCategory)?.name
+                categories?.find((c) => c.id === selectedCategory)?.name
                 : "Categorias"}
             </span>
             <span className="text-lg">
@@ -135,13 +134,11 @@ export default function SelectPage() {
               {categories?.map((cat) => (
                 <button
                   key={cat.id}
-                  className={`px-4 py-2 rounded-full border text-sm ${
-                    selectedCategory === cat.id
+                  className={`px-4 py-2 rounded-full border text-sm ${selectedCategory === cat.id
                       ? "bg-black text-white"
                       : "bg-white"
-                  }`}
+                    }`}
                   onClick={() => {
-                    setSelectedCategory(cat.id);
                     setCategoriesOpen(false);
                     scrollToCategory(cat.id);
                   }}
@@ -176,12 +173,19 @@ export default function SelectPage() {
               <Accordion
                 title={g.name}
                 open={(openCategoryId || firstCatId) === g.id}
-                onToggle={() =>
+                onToggle={() => {
                   setOpenCategoryId((prev) => {
                     const cur = prev || firstCatId;
-                    return cur === g.id ? "" : g.id;
-                  })
-                }
+                    const next = cur === g.id ? "" : g.id;
+
+                    // 👉 se abriu, fazemos scroll para o topo da categoria
+                    if (next === g.id) {
+                      scrollToCategory(g.id);
+                    }
+
+                    return next;
+                  });
+                }}
                 anchorId={`cat-${g.id}`}
               >
                 {/* SORT BUTTON */}
