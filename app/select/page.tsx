@@ -18,6 +18,10 @@ export default function SelectPage() {
   const count = totalItems();
   const subtotal = subtotalEur();
   const transport = transportEur();
+  const [visible, setVisible] = useState(false)
+
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Group items by category
   const grouped = useMemo(() => {
@@ -67,27 +71,43 @@ export default function SelectPage() {
       {/* CATEGORY NAV */}
       <div className="sticky top-16 z-10 bg-white/90 backdrop-blur border-b border-neutral-200">
         <div className="mx-auto max-w-md px-4 py-4">
-          <h2 className="text-sm font-medium text-neutral-800">Categorias</h2>
+          <button
+            className="flex items-center justify-between w-full px-4 py-3 rounded-lg border bg-white"
+            onClick={() => setCategoriesOpen((prev) => !prev)}
+          >
+            <span className="font-semibold">
+              {selectedCategory
+                ? "Categoria - " + categories.find(c => c.id === selectedCategory)?.name
+                : "Categorias"}
+            </span>
+            <span className="text-lg">
+              {categoriesOpen ? "▲" : "▼"}
+            </span>
+          </button>
 
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(categories ?? []).map((c) => {
-              const active = (openCategoryId || firstCatId) === c.id;
-              return (
+          {categoriesOpen && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {categories.map((cat) => (
                 <button
-                  key={c.id}
-                  onClick={() => scrollToCategory(c.id)}
-                  className={[
-                    "rounded-full px-4 py-2 text-sm border transition font-medium",
-                    active
-                      ? "border-black bg-black text-white"
-                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400",
-                  ].join(" ")}
+                  key={cat.id}
+                  className={`px-4 py-2 rounded-full border text-sm
+          ${selectedCategory === cat.id
+                      ? "bg-black text-white"
+                      : "bg-white"
+                    }
+        `}
+                  onClick={() => {
+                    setSelectedCategory(cat.id); scrollToCategory(cat.id);
+
+                    // 🔥 AUTO-COLLAPSE AO SELECIONAR
+                    setCategoriesOpen(false);
+                  }}
                 >
-                  {c.name}
+                  {cat.name}
                 </button>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
