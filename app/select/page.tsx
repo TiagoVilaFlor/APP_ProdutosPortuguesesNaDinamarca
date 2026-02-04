@@ -13,41 +13,82 @@ export default function SelectPage() {
   const { loading, categories, items } = useCatalog();
 
   // CART
-  const { totalItems, subtotalEur, wantsTransport, transportEur, clear } = useCart();
+  const {
+    totalItems,
+    subtotalEur,
+    wantsTransport,
+    transportEur,
+    clear,
+  } = useCart();
 
   const count = totalItems();
   const subtotal = subtotalEur();
   const transport = transportEur();
 
-  // Group items by category
+  // ===============================
+  // UI STATE
+  // ===============================
+  const [openCategoryId, setOpenCategoryId] = useState<string>("");
+  const [categoriesCollapsed, setCategoriesCollapsed] = useState(false);
+
+  // ===============================
+  // GROUP BY CATEGORY → SUBCATEGORY
+  // (se não tiveres subcategorias,
+  // funciona exatamente igual)
+  // ===============================
   const grouped = useMemo(() => {
-    return (categories ?? []).map((c) => ({
-      ...c,
-      items: (items ?? []).filter((i) => i.categoryId === c.id),
-    }));
+    return (categories ?? []).map((c) => {
+      const itemsInCategory = (items ?? []).filter(
+        (i) => i.categoryId === c.id
+      );
+
+      const subMap = new Map<string, typeof itemsInCategory>();
+
+      itemsInCategory.forEach((i) => {
+        const key = i.subcategoryId || "__no_sub__";
+        if (!subMap.has(key)) subMap.set(key, []);
+        subMap.get(key)!.push(i);
+      });
+
+      return {
+        ...c,
+        subcategories: Array.from(subMap.entries()).map(
+          ([id, items]) => ({
+            id,
+            name: id === "__no_sub__" ? null : id,
+            items,
+          })
+        ),
+      };
+    });
   }, [categories, items]);
 
-  // Scroll to category refs
+  // ===============================
+  // SCROLL HANDLING
+  // ===============================
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const [openCategoryId, setOpenCategoryId] = useState<string>("");
+  const firstCatId = categories?.[0]?.id;
 
   function scrollToCategory(catId: string) {
     setOpenCategoryId(catId);
+    setCategoriesCollapsed(true); // 🔥 AUTO-COLLAPSE
     const el = sectionRefs.current[catId];
     if (el) {
-      setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+      setTimeout(
+        () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+        80
+      );
     }
   }
 
-  const firstCatId = categories?.[0]?.id;
-
   return (
     <main className="pb-32 bg-neutral-50">
-
-      {/* HEADER BAR */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-100"> {/* INNER APP WIDTH */}
+      {/* ================= HEADER ================= */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-neutral-100">
         <div className="mx-auto max-w-md bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
-          <h1 className="text-base font-medium tracking-tight">Explorar produtos</h1>
+          <h1 className="text-base font-medium tracking-tight">
+            Explorar produtos
+          </h1>
 
           <button
             onClick={() => {
@@ -64,34 +105,49 @@ export default function SelectPage() {
       {/* Spacer for fixed header */}
       <div className="h-16"></div>
 
-      {/* CATEGORY NAV */}
+      {/* ================= CATEGORY NAV (COLLAPSABLE) ================= */}
       <div className="sticky top-16 z-10 bg-white/90 backdrop-blur border-b border-neutral-200">
-        <div className="mx-auto max-w-md px-4 py-4">
-          <h2 className="text-sm font-medium text-neutral-800">Categorias</h2>
+        <div className="mx-auto max-w-md px-4 py-3">
+          {/* Header row */}
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-medium text-neutral-800">
+              Categorias
+            </h2>
 
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(categories ?? []).map((c) => {
-              const active = (openCategoryId || firstCatId) === c.id;
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => scrollToCategory(c.id)}
-                  className={[
-                    "rounded-full px-4 py-2 text-sm border transition font-medium",
-                    active
-                      ? "border-black bg-black text-white"
-                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400",
-                  ].join(" ")}
-                >
-                  {c.name}
-                </button>
-              );
-            })}
+            <button
+              onClick={() => setCategoriesCollapsed((v) => !v)}
+              className="text-xs font-medium text-neutral-600 hover:text-black transition"
+            >
+              {categoriesCollapsed ? "Mostrar" : "Esconder"}
+            </button>
           </div>
+
+          {/* Category pills */}
+          {!categoriesCollapsed && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {(categories ?? []).map((c) => {
+                const active = (openCategoryId || firstCatId) === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => scrollToCategory(c.id)}
+                    className={[
+                      "rounded-full px-4 py-2 text-sm border transition font-medium",
+                      active
+                        ? "border-black bg-black text-white"
+                        : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400",
+                    ].join(" ")}
+                  >
+                    {c.name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* PRODUCT LIST */}
+      {/* ================= PRODUCT LIST ================= */}
       <div className="mx-auto max-w-md px-4 space-y-4 mt-4">
         {loading && (
           <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm text-neutral-700 shadow-sm">
@@ -102,7 +158,9 @@ export default function SelectPage() {
         {!loading && (categories?.length ?? 0) === 0 && (
           <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm text-red-600 shadow-sm">
             ❌ Não foi possível carregar categorias.
-            Verifica o Google Sheet e o link em <code>.env.local</code>.
+            <br />
+            Verifica o Google Sheet e o link em{" "}
+            <code>.env.local</code>.
           </div>
         )}
 
@@ -125,12 +183,26 @@ export default function SelectPage() {
               }
               anchorId={`cat-${g.id}`}
             >
-              {g.items.length === 0 ? (
-                <p className="text-sm text-neutral-500">Sem produtos nesta categoria.</p>
+              {g.subcategories.length === 0 ? (
+                <p className="text-sm text-neutral-500">
+                  Sem produtos nesta categoria.
+                </p>
               ) : (
-                <div className="divide-y divide-neutral-100">
-                  {g.items.map((it) => (
-                    <ItemRow key={it.id} item={it} />
+                <div className="space-y-4">
+                  {g.subcategories.map((sc) => (
+                    <div key={sc.id}>
+                      {sc.name && (
+                        <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                          {sc.name}
+                        </h4>
+                      )}
+
+                      <div className="divide-y divide-neutral-100">
+                        {sc.items.map((it) => (
+                          <ItemRow key={it.id} item={it} />
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
@@ -139,23 +211,27 @@ export default function SelectPage() {
         ))}
       </div>
 
-      {/* BOTTOM SUMMARY BAR */}
+      {/* ================= BOTTOM SUMMARY BAR ================= */}
       {count > 0 && (
         <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-md border-t bg-white p-4 shadow-lg">
           <div className="flex items-start justify-between gap-3">
-
             <div className="text-sm text-neutral-700">
               <div className="font-medium">
                 {count} {count === 1 ? "item" : "itens"} no carrinho
               </div>
               <div className="text-xs mt-1">
-                Subtotal: <span className="font-semibold">{formatEur(subtotal)}</span>
+                Subtotal:{" "}
+                <span className="font-semibold">
+                  {formatEur(subtotal)}
+                </span>
               </div>
 
               {wantsTransport && (
                 <div className="text-xs text-neutral-600">
                   Transporte (estimado):{" "}
-                  <span className="font-semibold">{formatEur(transport)}</span>
+                  <span className="font-semibold">
+                    {formatEur(transport)}
+                  </span>
                 </div>
               )}
             </div>
