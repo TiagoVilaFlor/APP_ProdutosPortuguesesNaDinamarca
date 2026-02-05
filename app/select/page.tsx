@@ -120,7 +120,7 @@ export default function SelectPage() {
           >
             <span className="font-semibold">
               {selectedCategory
-                ? "Categoria - " +
+                ? "Categoria | " +
                 categories?.find((c) => c.id === selectedCategory)?.name
                 : "Categorias"}
             </span>
