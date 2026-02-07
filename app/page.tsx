@@ -44,7 +44,7 @@ O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
         *Isto não é um compra imediata, apenas uma reserva sem compromisso
       </p>
       <p className="mt-4 text-xs text-neutral-500">
-        **Tenha em conta que este serviço é comunitário e pessoal, não sendo associado a nenhuma empresa legal.
+        **Tem em conta que este serviço é comunitário e pessoal, não sendo associado a nenhuma empresa legal.
       </p>
     </main>
   );
