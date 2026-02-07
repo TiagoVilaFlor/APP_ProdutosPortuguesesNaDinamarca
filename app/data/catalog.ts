@@ -13,6 +13,8 @@ export type CatalogItem = {
   volumeLiters: number;  // usado para calcular caixas (20L/caixa)
   image?: string;
   description?: string;
+  active: boolean;
+  order: number;
 };
 
 // Regras fixas (podes ajustar)
