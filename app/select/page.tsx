@@ -36,7 +36,7 @@ export default function SelectPage() {
   // GROUP ITEMS BY CATEGORY + SORT
   const grouped = useMemo(() => {
     return (categories ?? []).map((c) => {
-      const order = priceOrderByCat[c.id] ?? "asc";
+      const order = priceOrderByCat[c.id];
 
       const categoryItems = (items ?? [])
         .filter((i) => i.categoryId === c.id && i.active)
@@ -50,11 +50,11 @@ export default function SelectPage() {
         });
       }
 
-        return {
-          ...c,
-          items: categoryItems,
-        };
-      });
+      return {
+        ...c,
+        items: categoryItems,
+      };
+    });
   }, [categories, items, priceOrderByCat]);
 
   const firstCatId = categories?.[0]?.id ?? "";
