@@ -214,7 +214,7 @@ Inês
 
         ${htmlSummary}
 
-        <p>***Uma vez que este serviço é comunitário e pessoal não serão emitidas faturas comerciais.<br/>
+        <p><u><i>Uma vez que este serviço é comunitário e pessoal não serão emitidas faturas comerciais.</i></u><br/>
 
         <p style="margin-top:14px;color:#555;">Obrigado,<br/>Produtos Portugueses na Dinamarca</p>
       </div>
