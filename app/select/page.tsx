@@ -39,7 +39,7 @@ export default function SelectPage() {
       const order = priceOrderByCat[c.id] ?? "asc";
 
       const categoryItems = (items ?? [])
-        .filter((i) => i.categoryId === c.id)
+        .filter((i) => i.categoryId === c.id && i.active)
         .slice();
 
       return {
