@@ -42,11 +42,19 @@ export default function SelectPage() {
         .filter((i) => i.categoryId === c.id && i.active)
         .slice();
 
-      return {
-        ...c,
-        items: categoryItems,
-      };
-    });
+      if (order) {
+        categoryItems.sort((a, b) => {
+          const pa = Number(a.priceEur ?? 0);
+          const pb = Number(b.priceEur ?? 0);
+          return order === "asc" ? pa - pb : pb - pa;
+        });
+      }
+
+        return {
+          ...c,
+          items: categoryItems,
+        };
+      });
   }, [categories, items, priceOrderByCat]);
 
   const firstCatId = categories?.[0]?.id ?? "";
@@ -130,8 +138,8 @@ export default function SelectPage() {
                 <button
                   key={cat.id}
                   className={`px-4 py-2 rounded-full border text-sm ${selectedCategory === cat.id
-                      ? "bg-black text-white"
-                      : "bg-white"
+                    ? "bg-black text-white"
+                    : "bg-white"
                     }`}
                   onClick={() => {
                     setCategoriesOpen(false);
