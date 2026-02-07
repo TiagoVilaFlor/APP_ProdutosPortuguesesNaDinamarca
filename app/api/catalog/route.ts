@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import Papa from "papaparse";
 
+function parseBool(v: unknown): boolean {
+  if (typeof v === "boolean") return v;
+  if (typeof v === "number") return v === 1;
+
+  const s = String(v ?? "").trim().toLowerCase();
+  if (s === "") return false;
+
+  return s === "true" || s === "1" || s === "yes" || s === "y" || s === "sim";
+}
+
 export async function GET() {
   const url = process.env.NEXT_PUBLIC_CATALOG_URL;
 
@@ -35,7 +45,7 @@ export async function GET() {
       priceEur: Number(r.priceEur),
       image: r.image || "",
       description: r.description || "",
-      active: r.active !== "no",
+      active: parseBool(r.active),
       order: Number(r.order || 0),
     }))
     .filter(
