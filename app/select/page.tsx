@@ -40,12 +40,7 @@ export default function SelectPage() {
 
       const categoryItems = (items ?? [])
         .filter((i) => i.categoryId === c.id)
-        .slice()
-        .sort((a, b) => {
-          const pa = Number(a.priceEur ?? 0);
-          const pb = Number(b.priceEur ?? 0);
-          return order === "asc" ? pa - pb : pb - pa;
-        });
+        .slice();
 
       return {
         ...c,
