@@ -10,6 +10,7 @@ export function ItemRow({ item }: { item: CatalogItem }) {
   const line = lines.find((l) => l.itemId === item.id);
   const qty = line?.qty ?? 0;
   const [openItem, setOpenItem] = useState<CatalogItem | null>(null);
+  const hasFreeTransport = item.name?.includes("Terra das Lanchas")
 
   return (
     <div className="flex items-center gap-3 py-3">
@@ -33,7 +34,17 @@ export function ItemRow({ item }: { item: CatalogItem }) {
           className="font-medium cursor-pointer hover:underline line-clamp-3"
           onClick={() => setOpenItem(item)}
         >
-          {item.name}
+          {hasFreeTransport && (
+            <span className="bg-green-700 text-white font-semibold text-[10px] px-2 py-1 rounded-full">
+              🚚 TRANSPORTE GRÁTIS
+            </span>
+          )}
+          {hasFreeTransport && (
+            <span>
+              &nbsp;
+            </span>
+          )}
+           {item.name}
         </div>
 
         <div className="text-xs text-neutral-500 mt-0.5 truncate">
