@@ -205,10 +205,10 @@ Inês
       <div style="font-family:Arial,sans-serif;color:#111;">
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
-        <p>Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus artigos e à realização da compra.<br/>
-        <p>O custo de transporte será confirmado apenas após fazermos as compras e organizarmos os teus produtos na(s) respetiva(s) caixa(s).
-Nessa altura, enviaremos foto para que possas visualizar o espaço ocupado e o valor final do envio.<br/>
-        <p>O pagamento do transporte será solicitado apenas depois desta confirmação.</p>
+        <p>Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus artigos e à respetiva compra.<br/>
+        <p>Após realizarmos as compras, organizamos os teus produtos na(s) caixa(s) de envio e confirmamos o valor final do transporte.
+Nessa altura, enviamos também foto para que possas visualizar o espaço ocupado.<br/>
+        <p>O pagamento do transporte será solicitado apenas após esta confirmação.</p>
         
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
@@ -217,6 +217,9 @@ Nessa altura, enviaremos foto para que possas visualizar o espaço ocupado e o v
         ${htmlSummary}
 
         <p><u><i>Uma vez que este serviço é comunitário e pessoal não serão emitidas faturas comerciais.</i></u><br/>
+        <p>Para minimizar o preço de transporte, terá de fazer o pick-up em Orestads (Copenhaga). 
+                Caso prefira receber a encomenda em casa, irá ter um custo extra de transporte.</p>
+                <p>A morada completa para pick-up será partilhada aós confirmação e pagamento da reserva.</p>
         <p>Qualquer dúvida, estamos sempre disponíveis para ajudar.<br/>
 
         <p style="margin-top:14px;color:#555;">Obrigado,<br/>Produtos Portugueses na Dinamarca</p>
