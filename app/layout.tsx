@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Seleção de Produtos Portugueses",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="mx-auto min-h-screen max-w-md bg-white shadow-sm">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );
