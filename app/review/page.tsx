@@ -177,11 +177,10 @@ export default function ReviewPage() {
 
               <p className="mt-2 text-xs text-neutral-500">
                 O valor final a pagamento será confirmado após preparação da encomenda.<br/><br/>
-                Para minimizar o preço de transporte, terás de fazer o pick-up em Orestads (Copenhaga). 
-                Caso prefira receber a encomenda em casa, irá ter um custo extra de transporte. Mais detalhes partilhados por email.<br/><br/>
+                Para minimizar o preço de transporte, terás de fazer o <u><i>pick-up em Ørestad (Copenhaga)</i></u>. 
+                Caso prefiras receber a encomenda em casa, irás ter um custo adicional de transporte. Mais detalhes partilhados por email.<br/><br/>
                 Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
-              </p>
-              <p className="mt-2 text-xs text-neutral-500">
+              <br/><br/>
                 *Uma vez que este serviço é comunitário e pessoal não serão
                 emitidas faturas.
               </p>
