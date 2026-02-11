@@ -301,6 +301,7 @@ export async function POST(req: Request) {
 
   const textSummary = toText(summary);
   const htmlSummary = toHtml(summary);
+  const createdAt = new Date();
 
   const subjectOwner = `Nova reserva - ${body.name} (${formatEur(
     summary.total
@@ -355,7 +356,7 @@ Inês
     `,
     attachments: [
       {
-        filename: "reserva.xlsx",
+        filename: "nova_reserva_"+body.name+"_a"+createdAt.toLocaleString("pt-PT")+"_.xlsx",
         content: Buffer.from(excelBufferNotClient),
       },
     ],
@@ -440,7 +441,7 @@ Inês
     `,
     attachments: [
       {
-        filename: "reserva.xlsx",
+        filename: "nova_reserva_"+body.name+"_a"+createdAt.toLocaleString("pt-PT")+"_.xlsx",
         content: Buffer.from(excelBufferClient),
       },
     ],
