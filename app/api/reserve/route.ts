@@ -113,14 +113,14 @@ async function buildExcel(
 
   if (isClient) {
     itemsSheet.columns = [
-      { header: "Produto", key: "name", width: 80 },
+      { header: "Artigo", key: "name", width: 80 },
       { header: "Qtd", key: "qty", width: 20 },
       { header: "Preço €", key: "price", width: 14 },
     ];
   } else {
     itemsSheet.columns = [
       { header: "#", key: "id", width: 15 },
-      { header: "Produto", key: "name", width: 80 },
+      { header: "Artigo", key: "name", width: 80 },
       { header: "Qtd", key: "qty", width: 20 },
       { header: "Preço €", key: "price", width: 14 },
     ];
@@ -148,7 +148,7 @@ async function buildExcel(
 
   itemsSheet.addRow({});
   itemsSheet.addRow({
-    qty: "Subtotal - Produtos",
+    qty: "Subtotal",
     price: summary.subtotal,
   });
   itemsSheet.addRow({
@@ -181,7 +181,7 @@ function toText(summary: ReturnType<typeof buildSummary>) {
       ? `\nTransporte: ${formatEur(summary.transport)} (20€ por caixa de 20L; caixas: ${summary.boxes}; litros: ${summary.liters.toFixed(1)}L)`
       : `\nTransporte: 0€ (Pick-up)`;
 
-  return `${lines.join("\n")}\n\nSubtotal - Produtos: ${formatEur(summary.subtotal)}${transportText}\nTOTAL ESTIMADO: ${formatEur(summary.total)}`;
+  return `${lines.join("\n")}\n\nSubtotal: ${formatEur(summary.subtotal)}${transportText}\nTOTAL ESTIMADO: ${formatEur(summary.total)}`;
 }
 
 function toHtml(summary: ReturnType<typeof buildSummary>) {
@@ -205,7 +205,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
       <thead>
         <tr style="background:#fafafa;">
         <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">#</th>
-          <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Produto</th>
+          <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Artigo</th>
           <th style="padding:10px;text-align:center;border-bottom:1px solid #eee;">Qtd</th>
           <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço</th>
         </tr>
@@ -213,7 +213,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
       <tbody>${rows}</tbody>
       <tfoot>
         <tr>
-          <td colspan="3" style="padding:12px;text-align:right;">Subtotal - Produtos</td>
+          <td colspan="3" style="padding:12px;text-align:right;">Subtotal</td>
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.subtotal))}</strong></td>
         </tr>
         <tr>
@@ -308,7 +308,8 @@ export async function POST(req: Request) {
   )})`;
 
   const subjectUser = `Confirmação da tua reserva - Produtos Portugueses na Dinamarca (custo dos produtos: ${formatEur(
-    summary.subtotal)} + Transporte)`;
+    summary.subtotal
+  )})`;
 
   const notesText = body.notes?.trim() ? `\nNotas do cliente: ${body.notes.trim()}\n` : "";
 
@@ -384,7 +385,7 @@ Inês
 
       <h3 style="margin:0 0 8px 0; font-size:16px;">🧾 Próximos passos</h3>
       <p style="margin:0 0 12px 0;">
-        Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus produtos e à respetiva compra.
+        Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus artigos e à respetiva compra.
       </p>
       <p style="margin:0 0 12px 0;">
         Após realizarmos as compras, organizamos os teus produtos na(s) caixa(s) de envio e confirmamos o valor final do transporte.
