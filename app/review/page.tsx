@@ -158,7 +158,7 @@ export default function ReviewPage() {
           <div className="mt-5 space-y-3">
             <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-neutral-700">Subtotal</div>
+                <div className="text-sm text-neutral-700">Subtotal - Produtos</div>
                 <div className="font-semibold">{formatEur(subtotal)}</div>
               </div>
 
