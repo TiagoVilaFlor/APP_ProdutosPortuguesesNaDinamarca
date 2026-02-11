@@ -176,9 +176,9 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O valor final a pagamento será confirmado após preparação da encomenda.
-              </p>
-              <p className="mt-2 text-xs text-neutral-500">
+                O valor final a pagamento será confirmado após preparação da encomenda.<br/><br/>
+                Para minimizar o preço de transporte, terá de fazer o pick-up em Orestads (Copenhaga). 
+                Caso prefira receber a encomenda em casa, irá ter um custo extra de transporte.<br/><br/>
                 Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
               </p>
               <p className="mt-2 text-xs text-neutral-500">
