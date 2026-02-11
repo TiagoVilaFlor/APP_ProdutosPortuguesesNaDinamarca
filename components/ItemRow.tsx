@@ -35,7 +35,7 @@ export function ItemRow({ item }: { item: CatalogItem }) {
           onClick={() => setOpenItem(item)}
         >
           {hasFreeTransport && (
-            <span className="bg-green-700 text-white font-semibold text-[8px] px-2 py-1 rounded-full">
+            <span className="bg-green-700 text-white font-semibold text-[10px] px-2 py-1 rounded-full">
               🚚 TRANSPORTE GRÁTIS
             </span>
           )}
