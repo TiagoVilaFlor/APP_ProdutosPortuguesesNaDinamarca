@@ -115,14 +115,16 @@ async function buildExcel(
     itemsSheet.columns = [
       { header: "Produto", key: "name", width: 80 },
       { header: "Qtd", key: "qty", width: 20 },
-      { header: "Preço €", key: "price", width: 14 },
+      { header: "Preço Uni. €", key: "priceuni", width: 14 },
+      { header: "Preço Total €", key: "price", width: 14 },
     ];
   } else {
     itemsSheet.columns = [
       { header: "#", key: "id", width: 15 },
       { header: "Produto", key: "name", width: 80 },
       { header: "Qtd", key: "qty", width: 20 },
-      { header: "Preço €", key: "price", width: 14 },
+      { header: "Preço Uni. €", key: "priceuni", width: 14 },
+      { header: "Preço Total €", key: "price", width: 14 },
     ];
   }
 
@@ -131,7 +133,8 @@ async function buildExcel(
       itemsSheet.addRow({
         name: x.label,
         qty: x.qty,
-        price: x.priceEur,
+        priceuni: x.priceEur,
+        price: x.priceEur * x.qty,
       });
     });
   } else {
@@ -140,7 +143,8 @@ async function buildExcel(
         id: x.id,
         name: x.label,
         qty: x.qty,
-        price: x.priceEur,
+        priceuni: x.priceEur,
+        price: x.priceEur * x.qty,
       });
     });
   }
@@ -148,15 +152,15 @@ async function buildExcel(
 
   itemsSheet.addRow({});
   itemsSheet.addRow({
-    qty: "Subtotal - Produtos",
+    priceuni: "Subtotal - Produtos",
     price: summary.subtotal,
   });
   itemsSheet.addRow({
-    qty: "Transporte (tbc)",
+    priceuni: "Transporte (tbc)",
     price: summary.transport,
   });
   itemsSheet.addRow({
-    qty: "TOTAL Estimado",
+    priceuni: "TOTAL Estimado",
     price: summary.total,
   });
 
@@ -193,6 +197,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         <td style="padding:10px;border-bottom:1px solid #eee;">${escapeHtml(x.label)}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">${x.qty}</td>
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">${escapeHtml(formatEur(x.priceEur))}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">${escapeHtml(formatEur(x.priceEur * x.qty))}</td>
       </tr>`
     )
     .join("");
@@ -207,21 +212,22 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">#</th>
           <th style="padding:10px;text-align:left;border-bottom:1px solid #eee;">Produto</th>
           <th style="padding:10px;text-align:center;border-bottom:1px solid #eee;">Qtd</th>
-          <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço</th>
+          <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço Uni.</th>
+          <th style="padding:10px;text-align:right;border-bottom:1px solid #eee;">Preço Total</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
       <tfoot>
         <tr>
-          <td colspan="3" style="padding:12px;text-align:right;">Subtotal - Produtos</td>
+          <td colspan="4" style="padding:12px;text-align:right;">Subtotal - Produtos</td>
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.subtotal))}</strong></td>
         </tr>
         <tr>
-          <td colspan="3" style="padding:12px;text-align:right;">Transporte (tbc)</td>
+          <td colspan="4" style="padding:12px;text-align:right;">Transporte (tbc)</td>
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(20))}</strong></td>
         </tr>
         <tr>
-          <td colspan="3" style="padding:12px;text-align:right;"><strong>TOTAL ESTIMADO</strong></td>
+          <td colspan="4" style="padding:12px;text-align:right;"><strong>TOTAL ESTIMADO</strong></td>
           <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.total))}</strong></td>
         </tr>
       </tfoot>
@@ -357,7 +363,7 @@ Inês
     `,
     attachments: [
       {
-        filename: "nova_reserva_"+body.name+"_a"+createdAt.toLocaleString("pt-PT")+"_.xlsx",
+        filename: "nova_reserva_" + body.name + "_a" + createdAt.toLocaleString("pt-PT") + "_.xlsx",
         content: Buffer.from(excelBufferNotClient),
       },
     ],
@@ -442,7 +448,7 @@ Inês
     `,
     attachments: [
       {
-        filename: "nova_reserva_"+body.name+"_a"+createdAt.toLocaleString("pt-PT")+"_.xlsx",
+        filename: "nova_reserva_" + body.name + "_a" + createdAt.toLocaleString("pt-PT") + "_.xlsx",
         content: Buffer.from(excelBufferClient),
       },
     ],
