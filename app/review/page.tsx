@@ -166,8 +166,9 @@ export default function ReviewPage() {
                 <div className="text-sm text-neutral-700">Transporte</div>
                 <div className="font-semibold">{formatEur(transport)}</div>
               </div>
-              <p className="mt-2 text-xs text-neutral-500"> Este valor é figurativo, vamos confirmar posteriormente por
-                email face ao volume total dos teus artigos. </p>
+
+              <p className="mt-2 text-xs text-neutral-500">
+                O valor de transporte apresentado é <b>indicativo</b> e poderá ser ajustado conforme o volume final da tua encomenda (<u><i>para menos de 20€</i></u>).</p>
 
               <div className="mt-3 border-t border-neutral-200 pt-3 flex items-center justify-between">
                 <div className="text-base font-semibold">Total estimado</div>
@@ -175,7 +176,10 @@ export default function ReviewPage() {
               </div>
 
               <p className="mt-2 text-xs text-neutral-500">
-                O total final vai ser confirmado por email após embalamento.
+                O valor final a pagamento será confirmado após preparação da encomenda.
+              </p>
+              <p className="mt-2 text-xs text-neutral-500">
+                Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
               </p>
               <p className="mt-2 text-xs text-neutral-500">
                 *Uma vez que este serviço é comunitário e pessoal não serão
@@ -204,7 +208,7 @@ export default function ReviewPage() {
 
               <label className="mt-3 block text-sm">
                 Telefone
-                <input name="address" type="tel" placeholder="Ex: 12121212 or 123123123" required pattern="[0-9]{9}|[0-9]{8}" className="mt-1 w-full rounded-lg border px-3 py-2"/>
+                <input name="address" type="tel" placeholder="Ex: 12121212 or 123123123" required pattern="[0-9]{9}|[0-9]{8}" className="mt-1 w-full rounded-lg border px-3 py-2" />
               </label>
 
               <label className="mt-3 block text-sm">
@@ -226,7 +230,7 @@ export default function ReviewPage() {
                   onChange={(e) => setAgree(e.target.checked)}
                 />
                 Confirmo que pretendo submeter esta reserva com o conhecimento de
-            ser uma compra pessoal e em envio comunitário.
+                ser uma compra pessoal e em envio comunitário.
               </label>
 
               <div className="mt-4 flex gap-3">

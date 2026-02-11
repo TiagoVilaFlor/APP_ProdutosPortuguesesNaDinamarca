@@ -9,7 +9,7 @@ export default function Home() {
         className="mt-4 mb-4 w-full h-64 object-cover rounded-2xl"
       />
       <p className="mt-3 text-neutral-700">
-        <b>Olá Portugueses</b>, estamos a testar uma nova forma simples e comunitária de trazer produtos portugueses até à Dinamarca.
+        <b>Olá Compatriotas</b>, estamos a testar uma nova forma simples e comunitária de trazer produtos de Portugal até à Dinamarca.
 O teu feedback ajuda-nos a melhorar este projeto e preparar futuras entregas.
       </p>
 

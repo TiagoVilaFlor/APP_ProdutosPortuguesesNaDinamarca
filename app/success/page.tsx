@@ -8,6 +8,9 @@ export default function SuccessPage() {
         <p className="mt-2 text-neutral-700">
           Enviámos um email com o resumo da tua reserva. Se não aparecer, verifica o spam.
         </p>
+        <p className="mt-2 text-xs text-neutral-700">
+          Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
+        </p>
       </div>
 
       <div className="mt-6 space-y-3">
