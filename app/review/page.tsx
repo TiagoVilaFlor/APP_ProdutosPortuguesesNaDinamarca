@@ -210,6 +210,8 @@ export default function ReviewPage() {
                   {formatEur(transport)}
                 </span>
               </div>
+              <p className="mt-2 text-xs text-neutral-500">
+                O valor de transporte apresentado é <b>indicativo</b> e poderá ser ajustado conforme o volume final da tua encomenda (<u><i>para menos de 20€</i></u>).</p>
 
               <div className="mt-3 border-t pt-3 flex justify-between">
                 <span className="font-semibold">
@@ -219,6 +221,16 @@ export default function ReviewPage() {
                   {formatEur(total)}
                 </span>
               </div>
+
+              <p className="mt-2 text-xs text-neutral-500">
+                O valor final a pagamento será confirmado após preparação da encomenda.<br /><br />
+                Para minimizar o preço de transporte, terás de fazer o <u><i>pick-up em Ørestad (Copenhaga)</i></u>.
+                Caso prefiras receber a encomenda em casa, irás ter um custo adicional de transporte. Mais detalhes partilhados por email.<br /><br />
+                Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
+                <br /><br />
+                *Uma vez que este serviço é comunitário e pessoal não serão
+                emitidas faturas.
+              </p>
             </div>
           </div>
 
@@ -266,7 +278,8 @@ export default function ReviewPage() {
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
               />
-              Confirmo a submissão da reserva
+              Confirmo que pretendo submeter esta reserva com o conhecimento de
+              ser uma compra pessoal e em envio comunitário.
             </label>
 
             {/* ================= BUTTONS ================= */}
@@ -288,10 +301,9 @@ export default function ReviewPage() {
                 className={`
                   flex-1 rounded-xl px-4 py-3 font-medium
                   flex items-center justify-center gap-2
-                  ${
-                    loading || !agree
-                      ? "bg-neutral-300 text-neutral-500"
-                      : "bg-black text-white hover:bg-neutral-800"
+                  ${loading || !agree
+                    ? "bg-neutral-300 text-neutral-500"
+                    : "bg-black text-white hover:bg-neutral-800"
                   }
                 `}
               >
@@ -310,6 +322,9 @@ export default function ReviewPage() {
                 {status}
               </div>
             )}
+            <p className="mt-2 text-xs text-neutral-500">
+              *Ao clicar no botão "Confirmar e submeter", pode demorar alguns segundos até ver a página de sucesso. Obrigado pela compreensão.
+            </p>
           </form>
         </>
       )}
