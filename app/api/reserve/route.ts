@@ -100,7 +100,7 @@ function toHtml(summary: ReturnType<typeof buildSummary>) {
         </tr>
         <tr>
           <td colspan="3" style="padding:12px;text-align:right;"><strong>TOTAL ESTIMADO</strong></td>
-          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.total+20))}</strong></td>
+          <td style="padding:12px;text-align:right;"><strong>${escapeHtml(formatEur(summary.total + 20))}</strong></td>
         </tr>
       </tfoot>
     </table>
@@ -152,7 +152,7 @@ export async function POST(req: Request) {
   const notesText = body.notes?.trim() ? `\nNotas do cliente: ${body.notes.trim()}\n` : "";
 
   const ownerText =
-`Nova reserva recebida:
+    `Nova reserva recebida:
 
 Nome: ${body.name}
 Email: ${body.email}
@@ -163,7 +163,7 @@ ${textSummary}
 `;
 
   const userText =
-`Olá ${body.name},
+    `Olá ${body.name},
 
 Recebemos a tua reserva ✅, e obrigado por participares nesta iniciativa comunitária.
 
@@ -205,8 +205,10 @@ Inês
       <div style="font-family:Arial,sans-serif;color:#111;">
         <p>Olá <strong>${escapeHtml(body.name)}</strong>,</p>
         <p>Recebemos a tua reserva ✅<br/>
-        <p>Quando tivermos confirmação do próximo transporte, entramos em contacto contigo para procedermos ao pagamento e à compra dos teus artigos.<br/>
-        <p>Tem em conta que o custo do transporte é confirmado após fazermos as tuas compras e colocarmos na(s) caixa(s), enviaremos foto para te reportar o espaço e o valor final.<br/>
+        <p>Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus artigos e à realização da compra.<br/>
+        <p>O custo de transporte será confirmado apenas após fazermos as compras e organizarmos os teus produtos na(s) respetiva(s) caixa(s).
+Nessa altura, enviaremos foto para que possas visualizar o espaço ocupado e o valor final do envio.<br/>
+        <p>O pagamento do transporte será solicitado apenas depois desta confirmação.</p>
         
         <p><strong>Telefone para contacto:</strong><br/>${escapeHtml(body.address)}</p>
 
@@ -215,6 +217,7 @@ Inês
         ${htmlSummary}
 
         <p><u><i>Uma vez que este serviço é comunitário e pessoal não serão emitidas faturas comerciais.</i></u><br/>
+        <p>Qualquer dúvida, estamos sempre disponíveis para ajudar.<br/>
 
         <p style="margin-top:14px;color:#555;">Obrigado,<br/>Produtos Portugueses na Dinamarca</p>
       </div>
