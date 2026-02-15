@@ -391,7 +391,7 @@ Inês
 
       <h3 style="margin:0 0 8px 0; font-size:16px;">🧾 Próximos passos</h3>
       <p style="margin:0 0 12px 0;">
-        Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus produtos e à respetiva compra.
+        Quando tivermos confirmação do próximo transporte, entraremos em contacto contigo para procedermos ao pagamento dos teus produtos e à respetiva compra. Relembra-te que este serviço é comunitário e pessoal e está em teste.
       </p>
       <p style="margin:0 0 12px 0;">
         Após realizarmos as compras, organizamos os teus produtos na(s) caixa(s) de envio e confirmamos o valor final do transporte.
