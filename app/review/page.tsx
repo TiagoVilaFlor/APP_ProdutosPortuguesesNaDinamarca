@@ -228,8 +228,7 @@ export default function ReviewPage() {
                 Caso prefiras receber a encomenda em casa, irás ter um custo adicional de transporte. Mais detalhes partilhados por email.<br /><br />
                 Dúvidas? Contacta-nos em: produtosportuguesesnadinamarca@gmail.com
                 <br /><br />
-                *Uma vez que este serviço é comunitário e pessoal não serão
-                emitidas faturas.
+                *Relembra-te que este serviço é comunitário e pessoal e está em teste.
               </p>
             </div>
           </div>
